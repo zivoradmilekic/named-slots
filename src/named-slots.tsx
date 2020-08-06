@@ -1,6 +1,6 @@
-import { useState, useEffect, ReactChild } from "react";
+import React, { useState, useEffect, ReactChild } from "react";
 
-interface ReactSlots {
+export interface ReactSlots {
   [key: string]: ReactChild | ReactChild[];
 }
 
@@ -28,9 +28,9 @@ function sortChildren(children: ReactChild[], slotsNames?: string[]) {
       children: []
     }
   );
-}
+};
 
-function useSlots(children: any, slotsNames?: string[]) {
+export function useSlots(children: any, slotsNames?: string[]) {
   const [slots, setSlots] = useState<ReactSlots>({
     children: []
   });
@@ -40,6 +40,8 @@ function useSlots(children: any, slotsNames?: string[]) {
   }, [children]);
 
   return slots;
-}
+};
 
-export default useSlots;
+export const NamedSlots: React.FC<any> = props => {
+  return props.slots(sortChildren(props.children, props.slotsNames));
+};

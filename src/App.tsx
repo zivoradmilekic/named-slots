@@ -1,113 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 
-import Log from "./Log";
-import Layout from "./Layout";
-
-import useAuthToken from "./useAuthToken";
+import LayoutFunc from "./LayoutFunc";
+import LayoutClass from "./LayoutClass";
 
 export default function App() {
-  const [authToken, setAuthToken] = useState("");
-  const [toggle, setToggle] = useState(false);
-  const { token, userData, addToken, removeToken } = useAuthToken("authToken");
+  const [toggleClass, setToggleClass] = useState(false);
+  const [toggleFunc, setToggleFunc] = useState(false);
 
   return (
     <div className="App">
-      <nav className="navbar navbar-dark bg-primary">
-        <span className="navbar-brand mb-0 h1">useAuthToken</span>
-
-        <form className="form-inline ml-auto">
-          <a
-            href="https://www.jsonwebtoken.io/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-outline-light my-2 my-sm-0"
-          >
-            Get your JWT
-          </a>
-        </form>
-      </nav>
-      <Layout>
-        <h2 key="footer">Footer</h2>
+      <LayoutFunc>
+        <Fragment key="footer">Footer</Fragment>
         <p>main text</p>
-        <div key={toggle?"sidebar":""} className="">
+        <div key={toggleFunc?"sidebar":""} className="">
           <p>sidebar text</p>
           <p>sidebar text</p>
-          <button
-            className="btn btn-success"
-            onClick={() => {
-              setToggle(!toggle);
-            }}
-          >
-            Toggle elements
-          </button>
           <p>sidebar text</p>
           <p>sidebar text</p>
         </div>
-        <h1 key="header">Header</h1>
-      </Layout>
-      <div className="wrap my-5">
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <div className="jumbotron">
-                <h1 className="display-4">
-                  Hello, {userData?.name || "world"}!
-                </h1>
-                <p className="lead">
-                  This is a simple hero unit, a simple jumbotron-style component
-                  for calling extra attention to featured content or
-                  information.
-                </p>
-                <hr className="my-4" />
+        <Fragment key="header">
+          <span className="navbar-brand mb-0 h1">Functional component header</span>
 
-                <p className="lead">
-                  Token string:
-                </p>
-                <Log token={token} />
+          <form className="form-inline ml-auto">
+            <button
+              type="button"
+              className="btn btn-outline-light my-2 my-sm-0"
+              onClick={() => {
+                setToggleFunc(!toggleFunc);
+              }}
+            >
+              Toggle elements
+            </button>
+          </form>
+        </Fragment>
+      </LayoutFunc>
 
-                <p className="lead">
-                  User data from token:
-                </p>
-                <Log userData={userData} />
-              </div>
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Card title</h5>
-                  <p className="card-text">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                  </p>
-                  <div className="form-group">
-                    <textarea
-                      className="form-control mr-sm-2"
-                      value={authToken}
-                      onChange={e => setAuthToken(e.target.value)}
-                    />
-                  </div>
-                  <div
-                    className="btn-group" 
-                    role="group"
-                    aria-label="Basic example"
-                  >
-                    <button
-                      className="btn btn-success"
-                      onClick={() => {
-                        addToken(authToken);
-                        setAuthToken("");
-                      }}
-                    >
-                      Add token
-                    </button>
-                    <button className="btn btn-danger" onClick={removeToken}>
-                      Remove token
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <LayoutClass>
+        <Fragment key="footer">Footer</Fragment>
+        <p>main text</p>
+        <div key={toggleClass?"sidebar":""} className="">
+          <p>sidebar text</p>
+          <p>sidebar text</p>
+          <p>sidebar text</p>
+          <p>sidebar text</p>
         </div>
-      </div>
+        <Fragment key="header">
+          <span className="navbar-brand mb-0 h1">Class component header</span>
+
+          <form className="form-inline ml-auto">
+            <button
+              type="button"
+              className="btn btn-outline-light my-2 my-sm-0"
+              onClick={() => {
+                setToggleClass(!toggleClass);
+              }}
+            >
+              Toggle elements
+            </button>
+          </form>
+        </Fragment>
+      </LayoutClass>
     </div>
   );
 }
